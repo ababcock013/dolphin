@@ -11,7 +11,6 @@ public class Item
         ItemName = itemName;
     }
     
-    //Id
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
@@ -21,8 +20,8 @@ public class Item
     public string Description { get; set; }
     
     public decimal Price { get; set; }
-    //Name
-    //Description
-    //Price
+
+    public Menu Menu { get; set; }
+    public int MenuId { get; set; }
     
 }

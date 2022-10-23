@@ -9,7 +9,7 @@ public class Menu
     {
         MenuName = menuName;
     }
-    //Id
+
     
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -19,12 +19,13 @@ public class Menu
     [MaxLength(20)]
     public string MenuName { get; set; }
 
+    public string Category { get; set; }// Main dishes, sides, drinks, deserts 
+
     public ICollection<Item> Items { get; set; } = new List<Item>();
-    //Items
+
     
     [ForeignKey("RestaurantId")]
     public Restaurant? Restaurant { get; set; }
-
     public int RestaurantId { get; set; }
 
 }
