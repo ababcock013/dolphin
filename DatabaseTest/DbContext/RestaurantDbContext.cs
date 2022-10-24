@@ -7,7 +7,7 @@ namespace DatabaseTest.DbContext;
 public class RestaurantDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     private const string connectionString =
-        "User ID=dev;Password=password;Host=localhost;Port=5555;Database=development;";
+        "User ID=dev;Password=password;Host=localhost;Port=5555;Database=development; Include Error Detail=true";
     
     public DbSet<Restaurant> Restaurants { get; set; }
     public DbSet<Menu> Menus { get; set; }
@@ -24,9 +24,16 @@ public class RestaurantDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         var orderData = RestaurantSeeds.OrdersSeed();
         var restaurantData = RestaurantSeeds.RestaurantsSeed();
-        
-        modelBuilder.Entity<Restaurant>().HasData(restaurantData);
+        var menuData = RestaurantSeeds.MenuSeed();
+        var itemData = RestaurantSeeds.ItemSeed();
+
+        modelBuilder.Entity<Item>().HasData(itemData);
+        modelBuilder.Entity<Menu>().HasData(menuData);
         modelBuilder.Entity<Order>().HasData(orderData);
+        modelBuilder.Entity<Restaurant>().HasOne(m => m.Menu)
+            .WithOne(i => i.Restaurant)
+            .HasForeignKey<Menu>(b => b.RestaurantId);
+        modelBuilder.Entity<Restaurant>().HasData(restaurantData);
         base.OnModelCreating(modelBuilder);
     }
 }

@@ -25,6 +25,10 @@ public class Restaurant
     public List<Order> Orders { get; set; }
     //Order - one to many
     //Customers - many customers, user_ids
-    
-    
+
+    public string ToString()
+    {
+        return $"Name: {Name}" +
+               $"Orders: {} ";
+    }
 }

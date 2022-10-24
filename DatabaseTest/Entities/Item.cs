@@ -11,6 +11,8 @@ public class Item
         ItemName = itemName;
     }
     
+    //TODO: add quantity, size, options ect for diversity of items
+    
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
@@ -20,7 +22,12 @@ public class Item
     public string Description { get; set; }
     
     public decimal Price { get; set; }
-
+    
+    [ForeignKey("OrderId")]
+    public Order Order { get; set; }
+    public int OrderId { get; set; }
+    
+    [ForeignKey("MenuId")]
     public Menu Menu { get; set; }
     public int MenuId { get; set; }
     

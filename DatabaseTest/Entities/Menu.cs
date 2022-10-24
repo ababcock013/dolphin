@@ -25,7 +25,7 @@ public class Menu
 
     
     [ForeignKey("RestaurantId")]
-    public Restaurant? Restaurant { get; set; }
+    public Restaurant Restaurant { get; set; }
     public int RestaurantId { get; set; }
 
 }

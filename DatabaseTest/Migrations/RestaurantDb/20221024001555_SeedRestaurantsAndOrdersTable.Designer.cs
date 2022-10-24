@@ -2,6 +2,7 @@
 using DatabaseTest.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseTest.Migrations.RestaurantDb
 {
     [DbContext(typeof(RestaurantDbContext))]
-    partial class RestaurantDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221024001555_SeedRestaurantsAndOrdersTable")]
+    partial class SeedRestaurantsAndOrdersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +42,6 @@ namespace DatabaseTest.Migrations.RestaurantDb
                     b.Property<int>("MenuId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
@@ -50,29 +49,7 @@ namespace DatabaseTest.Migrations.RestaurantDb
 
                     b.HasIndex("MenuId");
 
-                    b.HasIndex("OrderId");
-
                     b.ToTable("Items");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Nasty pizza made from stale ass hairs and dog milk cheese",
-                            ItemName = "Large Pizza",
-                            MenuId = 1,
-                            OrderId = 1,
-                            Price = 9.99m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Hard old and not even made out of bread",
-                            ItemName = "Bread sticks",
-                            MenuId = 1,
-                            OrderId = 1,
-                            Price = 6.49m
-                        });
                 });
 
             modelBuilder.Entity("DatabaseTest.Entities.Menu", b =>
@@ -101,15 +78,6 @@ namespace DatabaseTest.Migrations.RestaurantDb
                         .IsUnique();
 
                     b.ToTable("Menus");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Category = "Pizzas",
-                            MenuName = "Pizza Slut Menu",
-                            RestaurantId = 1
-                        });
                 });
 
             modelBuilder.Entity("DatabaseTest.Entities.Order", b =>
@@ -180,15 +148,7 @@ namespace DatabaseTest.Migrations.RestaurantDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DatabaseTest.Entities.Order", "Order")
-                        .WithMany("Items")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Menu");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("DatabaseTest.Entities.Menu", b =>
@@ -214,11 +174,6 @@ namespace DatabaseTest.Migrations.RestaurantDb
                 });
 
             modelBuilder.Entity("DatabaseTest.Entities.Menu", b =>
-                {
-                    b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("DatabaseTest.Entities.Order", b =>
                 {
                     b.Navigation("Items");
                 });
