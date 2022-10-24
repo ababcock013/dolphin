@@ -21,9 +21,9 @@ public class Restaurant
     public string Bio { get; set; }
 
     public Menu Menu { get; set; } // One to one
-    
-    
-    //Order - many orders
+
+    public List<Order> Orders { get; set; }
+    //Order - one to many
     //Customers - many customers, user_ids
     
     
